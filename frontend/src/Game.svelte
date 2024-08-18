@@ -160,7 +160,7 @@
     board = data.board;
 
     // Update scores array with the actual scores returned from the server
-    scores = Array(7).fill(-Infinity);
+    scores = Array(7).fill(null);
     data.scores.forEach(([column, score]) => {
       scores[column] = score;
     });
@@ -187,7 +187,7 @@
     if (statusResponse.ok) {
       let winStatus = await statusResponse.json();
       console.log(winStatus.status);
-      return winStatus.status;
+      return winStatus.status != null;
     } else {
       console.error("Failed to check game status:", statusResponse.status);
       return undefined;
@@ -276,7 +276,7 @@
                         ? 'bg-success'
                         : 'bg-secondary'}"
                     >
-                      {score}
+                      {score != null ? score : "-"}
                     </div>
                   {/each}
                 </div>

@@ -1,15 +1,16 @@
 import sys
 import os
+
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+from config import MIN_PLAYER, MAX_PLAYER
 from game_logic import ConnectFourGame
 from copy import deepcopy
 import math
 
+
 class MinimaxAI:
     def __init__(self, depth=4):
         self.depth = depth  # Depth of search for minimax
-        self.MAX_PLAYER=2
-        self.MIN_PLAYER=1
 
     def find_best_move(self, board):
         """
@@ -28,7 +29,7 @@ class MinimaxAI:
         # Try out all valid moves
         for move in game.get_valid_moves():
             # Make move
-            game.make_move(move, self.MAX_PLAYER)
+            game.make_move(move, MAX_PLAYER)
             # Calculate the score
             score = self.minimax(game, self.depth, False)  # Minimize the opponent score
             # Undo move
@@ -43,7 +44,6 @@ class MinimaxAI:
 
         return best_move, move_scores
 
-
     def minimax(self, game, depth, is_maximizing):
         """
         Minimax algorithm with depth limitation.
@@ -52,7 +52,7 @@ class MinimaxAI:
             score = game.evaluate_board()
             if not is_maximizing:
                 score = -score
-            #print(f"Depth: {depth}, Is Maximizing: {is_maximizing}, Score: {score}")
+            # print(f"Depth: {depth}, Is Maximizing: {is_maximizing}, Score: {score}")
             return score
 
         # Maximizing player
@@ -61,18 +61,18 @@ class MinimaxAI:
             # Check out all the moves
             for move in game.get_valid_moves():
                 # Make move calculate score and then undo
-                game.make_move(move, self.MAX_PLAYER)
+                game.make_move(move, MAX_PLAYER)
                 score = self.minimax(game, depth - 1, False)
                 game.undo_move(move)
                 best_score = max(score, best_score)
             return best_score
-        
+
         # Minimizing player
         else:
             best_score = math.inf
             for move in game.get_valid_moves():
                 # Make move calculate score and then undo
-                game.make_move(move, self.MIN_PLAYER)
+                game.make_move(move, MIN_PLAYER)
                 score = self.minimax(game, depth - 1, True)
                 game.undo_move(move)
                 best_score = min(score, best_score)
