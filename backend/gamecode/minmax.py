@@ -49,9 +49,9 @@ class MinimaxAI:
         Minimax algorithm with depth limitation.
         """
         if depth == 0 or game.check_win() or game.check_draw():
-            score = game.evaluate_board()
+            score = game.evaluate_board(MAX_PLAYER if is_maximizing else MIN_PLAYER)
             if not is_maximizing:
-                score = -score
+                score = -score # Flip score because we always evaluate from the maximizing player view
             # print(f"Depth: {depth}, Is Maximizing: {is_maximizing}, Score: {score}")
             return score
 

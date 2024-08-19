@@ -86,32 +86,32 @@ class ConnectFourGame:
                 return False
         return True
 
-    def evaluate_board(self):
+    def evaluate_board(self, player):
         """
         Evaluate the board state and return a score.
+        This is done from the maximizing player view.
         """
         winner = self.check_win()
         if winner is not None:
-            return 200 if winner == 2 else -100
+            return 1000 if winner == player else -1000
         elif self.check_draw():
             return 0
         else:
-            return self.simple_heuristic_score()
+            return self.simple_heuristic_score(player)
 
-    def simple_heuristic_score(self):
+    def simple_heuristic_score(self, player):
         """
         Simple heuristic to evaluate the board based on potential two-in-a-rows
         and the centrality of the move (fields in the middle are more valuable).
+        This is done from the maximizing player view.
         """
         score = 0
         for r in range(len(self.board)):
             for c in range(len(self.board[0])):
-                if self.board[r][c] == MAX_PLAYER:
-                    score += SCORE_MATRIX[r][c]  # Add base score for position
-                elif self.board[r][c] == MIN_PLAYER:
-                    score -= SCORE_MATRIX[r][
-                        c
-                    ]  # Subtract base score for opponent position
+                if self.board[r][c] == player:
+                    score += SCORE_MATRIX[r][c]
+                else:
+                    score -= SCORE_MATRIX[r][c]
         return score
 
     def is_full(self, column):
