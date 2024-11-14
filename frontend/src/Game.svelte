@@ -213,7 +213,7 @@
 </script>
 
 <Container>
-  <Row>
+  <Row class="justify-content-center align-items-center" style="min-height: 100vh;">
     <Col md={{ size: 6 }} class="mx-auto">
       <Card>
         <CardBody>

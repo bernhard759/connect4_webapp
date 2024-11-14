@@ -9,6 +9,11 @@ app = Flask(__name__)
 game = None
 ai = MinimaxAI()
 
+# Welcome
+@app.route("/", methods=["GET"])
+def hello():
+    return "Welcome to the game backend"
+
 # Game init
 @app.route('/init_game', methods=['POST'])
 def init_game():
